@@ -2,11 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { Friend } from '../database/schema';
 
-interface FriendProfileProps {
-  friend: Friend;
-}
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../App';
 
-const FriendProfile: React.FC<FriendProfileProps> = ({ friend }) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'FriendProfile'>;
+
+const FriendProfile = ({ route }: Props) => {
+  const { friend } = route.params;
   const getTierInfo = (tier: number) => {
     switch (tier) {
       case 1: return { color: '#A855F7', label: 'Inner Circle' };
@@ -61,7 +63,7 @@ const FriendProfile: React.FC<FriendProfileProps> = ({ friend }) => {
 
         <Section title="Interests">
           <View style={styles.interestsContainer}>
-            {friend.interests.map((interest, index) => (
+            {friend.interests.map((interest: string, index: number) => (
               <View key={index} style={styles.interestTag}>
                 <Text style={styles.interestText}>{interest}</Text>
               </View>
